@@ -1,0 +1,147 @@
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title><?php echo $this->pageTitle = 'Register'?></title>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.js"></script>  
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css"/>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js"> </script>
+</head>
+<div id ="contents" class = "ifoud text03m">
+      <div class ="infoudtable">
+           <form action = "/customer/register" method = "post" id = "submitForm" name = "submitForm">
+                   <table border = "0" cellpadding = "0" cellspacing = "0">
+                          <tbody>
+                                 <tr>
+                                     <div class="form-group">
+                                            <th class = "col-lg-3 control-label">Name</th>
+                                            <td> <div class="col-lg-5">
+                                            <?php echo $this->formText('name', $this->request->name, array('class'=> 'w300', 'style' =>'margin-left: 20px'));?>
+                                            <br>
+                                            <div style ="color:red; text-align: left;">
+                                            <?php echo $this->formError('name');?>
+                                            </div>
+                                            </div></td>
+                                     </div>
+                                    
+                                 </tr>
+                                 
+                                 <tr>
+                                    <div class="form-group">
+                                          <th class = "col-lg-3 control-label">Email</th>
+                                          <td><div class="col-lg-5">
+                                          <?php echo $this->formText('email', $this->request->email, array('class'=> 'w300', 'style' =>'margin-left: 20px'));?>
+                                           </div></td>
+                                    </div>
+                                     
+                                 </tr>
+                                  <tr>
+                                    <div class="form-group">
+                                          <th class = "col-lg-3 control-label">Position</th>
+                                          <td><div class="col-lg-5">
+                                         <?php 
+                                                  echo $this->formSelect('sbt_pos', null, array('name'=>'sbt_pos', 'id'=>'sbt_pos'), array('Leader' =>'Leader','Tester' =>'Tester', 'Dev' =>'Dev', 'BSE' =>'BSE' ));
+                                                  
+                                          ?>
+                                           </div></td>
+                                    </div>
+                                     
+                                 </tr>
+                                 <div class="form-group">
+                                        <tr>
+                                            <th class="col-lg-3 control-label">Password</th>
+                                            <td > <div class="col-lg-5">
+                                            <?php echo $this->formPassword('password', $this->request->password, array('class'=> 'form-control', 'style' =>'margin-left: 20px'));?>
+                                            </div></td>
+                                       </tr>
+                                 </div>
+                                 <div class="form-group">
+                                         <tr>
+                                            <th class="col-lg-3 control-label">Confirm</th>
+                                            <td ><div class="col-lg-5">
+                                            <?php echo $this->formPassword('confirmPass', $this->request->confirmPass, array('class'=> 'form-control', 'style' =>'margin-left: 20px'));?>
+                                            </div></td>
+                                 </tr>
+                                 </div>
+                                
+                          </tbody>
+                   </table>
+                   <table class ="ztable_horizontal" style = "padding-right:18% !important">
+                         <tr>
+                              <td><?php echo $this->formButton('btSave', 'Sign Up', array('class' => 'zbtn_short', 'onclick'=>'onSubmit();')); ?>
+						      </td>
+						      
+                         </tr>
+                   </table>
+                   <?php //echo $this->formHidden('token', $this->token);?>
+                   <!-- yes/no dialog -->
+<!--         <div class="modal" id="yesno" title="確認"> -->
+<!--             <p>Do you want register member？</p> -->
+        </div>
+                  
+           </form>
+      </div>
+</div>
+<script type="text/javascript">
+function onSubmit() {
+// 	$("#yesno" ).dialog({
+// 	     resizable: false,
+// 	     height:140,
+// 	     modal: true,
+// 	     buttons: {
+// 	         "Accept": function() {
+   	        var submitForm = document.getElementById('submitForm');
+   	        submitForm.action ='/customer/register';
+   	        
+   	        submitForm.target ='_self';
+	           $("#submitForm").submit();
+// 	         },
+// 	         "Ignore": function() {
+// 	             $( this ).dialog( "close" );
+// 	         }
+// 	     }
+// 	 });
+}
+function onClick(){
+	$(document).ready(function(){
+		$("#chck").click(function(){
+			$.ajax({
+				type: "POST",
+				url:" ",
+				data: "",
+			
+			});
+		});
+	});
+}
+
+$(document).ready(function() {
+    $('#submitForm').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            password: {
+                validators: {
+                    identical: {
+                        field: 'confirmPass',
+                        message: 'The password and its confirm are not the same'
+                    }
+                }
+            },
+            confirmPass: {
+                validators: {
+                    identical: {
+                        field: 'password',
+                        message: 'The password and its confirm are not the same'
+                    }
+                }
+            }
+        }
+    });
+});
+
+</script>

@@ -1,0 +1,18 @@
+<title><?php echo $this->pageTitle = "Export file";?></title>
+<h2>Exporting Staff Infomation</h2>
+           <div class="inputbox">
+				<form action="/staff/report" method="post">
+					<p class="freetext">
+						Format:
+						<?php echo $this->formSelect('select',null, array('id'=>'select', 'name'=>'select'), array('pdf' =>'PDF','csv' =>'CSV', 'excel' =>'CSV for MS Excel') );?>
+						
+					</p>
+					<?php echo $this->formSubmit('export', 'EXPORT', array('class' => 'button')); ?>
+				</form>
+				<!-- end form search -->
+			</div>
+			
+			
+			
+<script type="text/javascript">
+</script>

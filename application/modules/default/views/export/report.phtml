@@ -1,0 +1,24 @@
+<h1>Staffs report</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Staff Id</th>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+<!--
+    Variable set on the controller, if there's no data to display
+    the count will be 0.
+-->
+<?php if(count($this->users) > 0) : ?>
+<?php foreach ($this->users as $userId => $user) : ?>
+    <tr>
+        <td><?php echo $userId; ?></td>
+        <td><?php echo $user['name']; ?></td>
+        <td><?php echo $user['email']; ?></td>
+    </tr>
+<?php endforeach; ?>
+<?php endif; ?>
+</table>

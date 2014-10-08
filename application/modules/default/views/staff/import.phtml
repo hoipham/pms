@@ -1,0 +1,17 @@
+<title><?php echo $this->pageTitle = "Import file";?></title>
+<h2>Importing Staff Infomation</h2>
+           <div class="inputbox">
+           <form action="/staff/import" method="post" enctype="multipart/form-data">
+                  <table>
+                    <tr>
+                        <th>Import</th>
+                        <td><?php echo $this->formFile('filename', array('id'=>'filename', 'name'=>'filename'))?></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $this->formButton('btn','IMPORT', array('class'=>'button','type'=>'submit'))?></td>
+                    </tr>
+               </table>
+				   
+           </form>
+              	
+			</div>		

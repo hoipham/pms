@@ -1,0 +1,24 @@
+# Git
+#.gitignore
+
+# Eclipse
+.buildpath
+.project
+.settings
+
+# Common meta files
+public/.htaccess
+
+*~
+*.bak
+*.BAK
+Thumbs.db
+.DS_Store
+.svn
+
+# Application files/dirs
+application/configs/application.ini
+public/_var/*
+application/var/*
+
+

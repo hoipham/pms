@@ -1,0 +1,167 @@
+<title><?php echo $this->pageTitle = 'Staff Management'?></title>
+<div id ="contents" class = "ifoud text03m">
+      <div class ="infoudtable">
+           <form action = "/staff/add" method = "post" id = "submitForm" name = "submitForm">
+                   <table border = "0" cellpadding = "0" cellspacing = "0">
+                          <tbody>
+                                 <tr>
+                                     <th class = "infoudtablebb">Name</th>
+                                     <td class = "infoudtablebb">
+                                         <?php echo $this->formText('name', $this->request->name, array('class'=> 'w300', 'style' =>'margin-left: 20px'));?>
+                                         <br>
+                                         <div style ="color:red; text-align: left;">
+                                         <?php echo $this->formError('name');?>
+                                         </div>
+                                      </td>
+                                 </tr>
+                                 <tr>
+                                     <th class = "infoudtablebb">Department</th>
+                                     <td class = "infoudtablebb"><?php echo $this->formSelect('dep', null,array('name' => 'dep', 'style' => 'width: 100px', 'onchange'=>'AjaxFunction();'),$this->option);?>
+                                     </td>
+                                      <br>
+                                         <div style ="color:red; text-align: left;">
+                                         <?php echo $this->formError('dep');?>
+                                         </div>
+                                 </tr>
+                                 <tr>
+                                     <th class = "infoudtablebb">Position</th>
+                                     <td class = "infoudtablebb">
+                                         <?php 
+                                                  echo $this->formSelect('sbt_pos', null, array('name'=>'sbt_pos', 'id'=>'sbt_pos'));
+                                                  
+                                          ?>
+                                         <br>
+                                         <div style ="color:red; text-align: left;">
+                                         <?php echo $this->formError('sbt_pos');?>
+                                         </div>
+                                      </td>
+                                 </tr>
+                                  
+                                 
+                                 <tr>
+                                     <th class = "infoudtablebb">Email</th>
+                                     <td class = "infoudtablebb">
+                                         <?php echo $this->formText('email', $this->request->email, array('class'=> 'w300', 'style' =>'margin-left: 20px'));?>
+                                         <br>
+                                         <div style ="color:red; text-align: left;">
+                                         <?php echo $this->formError('email');?>
+                                         </div>
+                                      </td>
+                                 </tr>
+                                
+                          </tbody>
+                   </table>
+                   <table class ="ztable_horizontal" style = "padding-left:18% !important">
+                         <tr>
+                              <td><?php echo $this->formButton('btSave', 'Add', array('class' => 'zbtn_short','onclick'=> 'onSubmit();')); ?>
+						      </td>
+						      <td><?php echo $this->formButtonTo(null, 'Exit', '/staff/list', array('class' => 'zbtn_back')); ?>
+						      </td>
+                         </tr>
+                   </table>
+                   <?php echo $this->formHidden('token', $this->token);?>
+                   <!-- yes/no dialog -->
+        <div class="modal" id="yesno" title="確認">
+            <p>Do you accept to add a staff？</p>
+        </div>
+                  
+           </form>
+      </div>
+</div>
+<script type="text/javascript">
+function AjaxFunction()
+{
+     var httpxml;
+
+    // Firefox, Opera 8.0+, Safari
+    httpxml=new XMLHttpRequest();
+  
+function stateck() 
+{
+    if(httpxml.readyState==4)
+      {
+//          alert(httpxml.responseText);
+         var myarray = JSON.parse(httpxml.responseText);
+//          var myarray=myarray.split(",");
+         for(j=document.submitForm.sbt_pos.options.length;j>0;j--)
+          {
+              document.submitForm.sbt_pos.remove(j-1);
+          }
+
+//       $.each(myarray, function(key, value) {
+//           alert(key + ' ' + value);
+//       });
+
+
+
+//          for (i=0;i<myarray.length;i++)
+         for(var key in myarray)
+         {
+             var optn = document.createElement("OPTION");
+             optn.text = myarray[key];
+//              optn.value = myarray[i];
+             optn.value = key;
+             document.submitForm.sbt_pos.options.add(optn);
+
+         } 
+      }
+    }
+   var url="/staff/position";
+	
+   var department_id=document.getElementById('dep').value;
+   url=url+"?dep_id="+department_id;
+   url=url+"&sid="+Math.random();
+   httpxml.onreadystatechange=stateck;
+   //alert(url);
+   httpxml.open("GET",url,true);
+   httpxml.send(null);
+}
+
+//  $("#ajaxBtn").click(function(){
+// 		var url = '/staff/test';
+// 		var data = 'data=1'; 
+// 		$.post(url, data, function(success){
+// 			alert(success.ok);
+// 		});
+// 	});
+
+	function onSubmit() {
+// 		var url = '/staff/test';
+// 		var data = $("#submitForm").serialize(); 
+// 		$.post(url, data, function(success){
+// 			alert("OK");
+// 		}, 'json');
+	    $("#yesno" ).dialog({
+	     resizable: false,
+	     height:140,
+	     modal: true,
+	     buttons: {
+	         "Accept": function() {
+    	        var submitForm = document.getElementById('submitForm');
+    	        submitForm.action ='/staff/confirm-add';
+    	        
+    	        submitForm.target ='_self';
+	           $("#submitForm").submit();
+	         },
+	         "Ignore": function() {
+	             $( this ).dialog( "close" );
+	         }
+	     }
+	 });
+	}
+
+	function onClick(){
+		$(document).ready(function(){
+			$("#chck").click(function(){
+				$.ajax({
+					type: "POST",
+					url:" ",
+					data: "",
+				
+				});
+			});
+		});
+	}
+	
+</script>
+

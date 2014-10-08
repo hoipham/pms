@@ -1,0 +1,164 @@
+<title><?php echo $this->pageTitle ="List Staff";?></title>
+<div id="z_layout_box_main" align="center">
+	<div style="color: red;">
+	<?php echo $this->dumpFlashMessages(); ?>
+	</div>
+	<div id="contents" class="info text03m">
+		<div class="infocontents">
+			<div class="inputbox">
+				<form action="/staff/list" method="post">
+					<p class="freetext">
+						Input Name
+						<?php echo $this->formText('name', $this->request->name, array('class' => 'w400'));?>
+						<div style="color: red; text-align: left; padding-left: 200px;"><?php echo $this->formError('name'); ?></div>
+					</p>
+					<?php echo $this->formSubmit('search', 'Search', array('class' => 'zbtn_short')); ?>
+				</form>
+				<!-- end form search -->
+			</div>
+			
+			<!-- Form data info -->
+			<form action="/staff/report" method="post">
+		
+				<div class="infotableset">
+				   <div>
+				   </div>
+				
+					<div class="pager">
+					<tr>
+					<td>
+					<p>
+					<a href="javascript:onClickAddStaff();">Add a Staff</a>
+					</p>
+					</td>
+					<td><a href="/staff/report"><?php echo $this->formButton('btn','Export', array('class'=>'button'));?></a></td>
+					</tr>
+			        <?php echo $this->paginator; ?>
+					</div>
+					
+					<table border="0" cellpadding="0" cellspacing="0"
+						class="infotable02" id="tablecontent">
+						<tbody>
+							<tr> 
+							    <th>Department</th>
+								<th class="thleft">Name</th>
+								<th>Email</th>
+								<th>Position</th>
+								<th class="thcenter" width="120px !important;">Create Date</th>
+								<th>Checkbox</th>
+								<th>Edit</th>
+								
+								
+								
+							</tr>
+							
+							
+							
+							    <?php foreach ($this->paginator as $item): ?>
+							 <tr>
+							    <td style="text-align: left"><?php echo StringUtil::getViewSubString($this->escape($item->department_name),$this->max_display_char); ?></td>
+							    <td style="text-align: left"><?php echo StringUtil::getViewSubString($this->escape($item->name),$this->max_display_char); ?> </td>
+								<td style="text-align: left"><?php echo StringUtil::getViewSubString($this->escape($item->email),$this->max_display_char); ?></td>
+								<td style="text-align: left"><?php echo StringUtil::getViewSubString($this->escape($item->pos_name),$this->max_display_char); ?></td>
+								<td style="text-align: left"><?php echo $this->dateFormat($this->escape($item->create_date),'Y/m/d'); ?>
+								</td>
+								<td style = "text-align: left"><span class="cbo"><?php echo $this->formCheckbox('cbox',$item->staff_id, array('name' => 'cbox', 'id' =>'cbox-'.$item->staff_id));?></span>	
+								</td>	
+								<td style = "text-align: center"><?php echo $this->formButtonTo('edit', 'Edit', '/staff/edit?staff_id='.$item->staff_id .'&isReturn', array('class'=>'button'));?> </td>		
+								
+							</tr>
+							
+							
+							<?php endforeach; ?>
+							
+						</tbody>
+					</table>
+					<table class ="ztable_horizontal" style = "padding-left:18% !important">
+					       <tr>
+					            <div class="pager">
+					            <p>
+					                 <a href = "javascript:onClickDelete();">Delete</a>
+<!-- 					                 <input type="submit" value="Submit"> -->
+					            </p>
+					            </div>
+					            
+					       </tr>
+					</table>
+					
+					<!-- padding -->
+					<div class="pager">
+					<?php echo $this->paginator; ?>
+					</div>
+					<!-- end padding -->
+				</div>
+			</form>
+			<!-- End form data info -->
+		</div>
+	</div>
+</div>
+
+<!-- yes/no dialog -->
+<div class="modal" id = "yesno" title = " Alert">
+      <p> Do you want delete this name ?</p>
+</div>
+<form id = "deleteForm" name = "deleteForm" 
+action = "/staff/delete" method = "post">
+      
+</form>
+
+<script type = "text/javascript">
+$(document).ready(function() {
+	var buttons = $("#yesno button").click(function(e) {
+		var yes = buttons.index(this) ===0;
+		if(yes == true) {
+			$("#deleteForm").submit();
+		}
+	});
+});
+
+function onClickDelete(id) {
+	$("#yesno").dialog({
+		resizable:false,
+		height:140,
+		modal:true,
+		buttons: {
+			"Delete": function() {
+// 				document.deleteForm.id.value = id;
+// 				$("#deleteForm").submit();
+                $('#deleteForm').empty();
+				$('input:checkbox[name=cbox]:checked').each(function()
+						{
+					       $('#deleteForm').append('<input type="hidden" name="id[]" value="'+$(this).val()+'" />');
+						});
+					$('#deleteForm').submit();
+			},
+
+			"Cancel": function() {
+				$(this).dialog("close");
+			}
+		}
+			
+});
+}
+
+function deleteInfo()
+{
+	alert(document.deleteForm.id.value);
+	document.deleteForm.submit();
+}
+
+function onClickAddStaff()
+{
+	//interval = setInterval(ajaxGetStaff, 500);
+	window.open("/staff/add");
+}
+
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	  // 偶数行にのみクラスを指定
+	  $('#tablecontent tr:even').addClass('bglightgray');
+	});
+</script>
+

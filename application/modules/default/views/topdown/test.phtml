@@ -1,0 +1,67 @@
+<title><?php echo $this->pageTitle="Address"?></title>
+<div class="inputbox">
+           <form name="testform" method="post" action="topdown/test">
+                  <table>
+                  
+                    <tr>
+                        <th>Countries:</th>
+                        <td>
+                        	<?php echo $this->formSelect('country',null, array('name' => 'country', 'style' => 'width: 100px','onchange'=>'AjaxFunction();'), $this->option);?>
+                        	
+                        	
+                        </td>
+                            
+                    </tr>
+                    <tr>
+                        <th>Provinces:</th>
+                        <td><?php echo $this->formSelect('province',null, array('id'=>'s2', 'name'=>'province') );?> 
+                         </td>
+                    </tr>
+                    
+               </table>
+               
+				   
+           </form>
+</div>		
+<script type="text/javascript">
+function AjaxFunction()
+{
+     var httpxml;
+
+    // Firefox, Opera 8.0+, Safari
+    httpxml=new XMLHttpRequest();
+  
+function stateck() 
+{
+    if(httpxml.readyState==4)
+      {
+//          alert(httpxml.responseText);
+         var myarray = JSON.parse(httpxml.responseText);
+         var myarray=myarray.split(",");
+         for(j=document.testform.province.options.length;j>0;j--)
+          {
+              document.testform.province.remove(j-1);
+          }
+
+
+         for (i=0;i<myarray.length;i++)
+         {
+             var optn = document.createElement("OPTION");
+             optn.text = myarray[i];
+             optn.value = myarray[i];
+             document.testform.province.options.add(optn);
+
+         } 
+      }
+    }
+   var url="/topdown/province";
+	
+   var country_id=document.getElementById('country').value;
+   url=url+"?country_id="+country_id;
+   url=url+"&sid="+Math.random();
+   httpxml.onreadystatechange=stateck;
+   //alert(url);
+   httpxml.open("GET",url,true);
+   httpxml.send(null);
+}
+</script>

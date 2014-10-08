@@ -1,0 +1,57 @@
+<title><?php echo $this->pageTile ="Upload Image File"?></title>
+<div id="contents" class="infoud text03m"></div>
+      <div class="infoudtable">
+           <form action="/upload/request" method="post" id="submitForm" name="submitForm" enctype="multipart/form-data">
+                  <table>
+                         <tbody>
+                                <tr>
+                                     <th>File</th>
+                                     <td>
+                                     <?php echo $this->formFile('filename', array('id'=>'filename', 'name'=>'filename'));?>
+                                     <?php echo $this->formError('filename');?>
+                                     </td>
+                                </tr>
+                                <tr>
+                                     <th>Preview</th>
+                                     <td>
+                                        <div id ="previewid" style="background-image; height: 100px; width: 200px; border: 1px solid black;"> </div>
+                                     </td>
+                                </tr>
+                                
+                         </tbody>
+                  </table>
+                  <table>
+                         <tr>
+                             <td>
+                                 <?php echo $this->formButton('btn','Upload', array('class'=>'zbtn_short', 'onclick'=>'onSubmit();'));?>
+                             </td>             
+                         </tr>
+                 </table>
+           </form>
+  </div>
+  
+ <script type="text/javascript">
+ function onSubmit() {
+	 var submitForm = document.getElementById('submitForm');
+	 submitForm.action = '/upload/upload';
+	 submitForm.target = '_self';
+	 $("#submitForm").submit();
+ }
+
+
+ $(window).load(function(){
+	 /* image preview */
+	 $("#filename").change(function(){
+	     var oFReader = new FileReader();
+	     oFReader.readAsDataURL(this.files[0]);
+	     console.log(this.files[0]);
+	     oFReader.onload = function (oFREvent) {
+	         $("#previewid").html('<img src="'+oFREvent.target.result+'" height="100" width="200">');
+	     };
+	 });
+	  
+	 });
+
+ 
+     
+</script>

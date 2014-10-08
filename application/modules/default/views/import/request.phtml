@@ -1,0 +1,41 @@
+<title><?php echo $this->pageTile ="Import File"?></title>
+<div id="contents" class="infoud text03m"></div>
+      <div class="infoudtable">
+           <form action="/upload/request" method="post" id="submitForm" name="submitForm" enctype="multipart/form-data">
+                  <table>
+                         <tbody>
+                                <tr>
+                                     <th>File</th>
+                                     <td>
+                                     <?php echo $this->formFile('filename', array('id'=>'filename', 'name'=>'filename'));?>
+                                     <?php echo $this->formError('filename');?>
+                                     </td>
+                                </tr>
+                                
+                                
+                         </tbody>
+                  </table>
+                  <table>
+                         <tr>
+                             <td>
+                                 <?php echo $this->formButton('btn','Import', array('class'=>'button'));?>
+                             </td>             
+                         </tr>
+                 </table>
+           </form>
+  </div>
+  
+ <script type="text/javascript">
+ $(window).load(function(){
+	 /* image preview */
+	 $("#filename").change(function(){
+	     var oFReader = new FileReader();
+	     oFReader.readAsDataURL(this.files[0]);
+	     console.log(this.files[0]);
+// 	     oFReader.onload = function (oFREvent) {
+// 	         $("#previewid").html('<img src="'+oFREvent.target.result+'" height="100" width="200">');
+// 	     };
+	 });
+	  
+	 });
+ </script>

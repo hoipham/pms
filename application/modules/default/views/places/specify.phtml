@@ -1,0 +1,19 @@
+<title><?php echo "Address Information";?></title>
+<div class="inputbox">
+           <form action="/places/specify" method="post" enctype="multipart/form-data">
+                  <table>
+                    <tr>
+                        <th>Countries</th>
+                        <td ><?php echo $this->formSelect('select', array('id'=>'select', 'name'=>'select'));?></td>
+                    </tr>
+               </table>				   
+           </form>
+           <form >
+                  <tr>
+                        <th>Province</th>
+                        <td><?php echo $this->formSelect('pro_select', array('id'=>'pro_select', 'name'=>'pro_select'));?></td>
+                  </tr>
+           </form>
+           
+              	
+			</div>		

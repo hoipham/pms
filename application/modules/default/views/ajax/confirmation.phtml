@@ -1,0 +1,38 @@
+<form action="/ajax/confirmation" method="POST" id="idForm">
+	Username: <input id = "name" type ="text" name="username"><br>
+	Email: <input id = "email" type="text" name="email"><br>
+	Password: <input id = "password" type = "text" name="password"><br>
+	
+	<div id="restTxt"></div>
+	<input type="button" value="Ajax" id="viewbtn">
+<!-- 	<button id="viewbtn">View</button> -->
+	<input id = "submit" type="submit" value="Login">
+</form>
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript">
+<!--
+$(document).ready(function(){
+
+   $("#viewbtn").click(function(){
+	// AJAX Code To Submit Form.
+	$.ajax({
+		type: "GET",
+		url:  "/ajax/confirmation",
+// 		data: data,
+// 		data: 'user=test',
+// 		dataType: 'json',
+        
+		success:function(data){
+			alert(data.email);
+        },
+	    error: function(data){
+	    	alert('ERROR');
+	    	
+		},
+	});
+	
+});
+});
+//-->
+</script>
